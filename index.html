@@ -1,0 +1,68 @@
+<html lang="en">
+<!-- colors: 3D3B8E, 6883BA,EBEBEB,E072A4,B0E298 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Data Visualization</title>
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <h1>COVID-19 Data Visualization</h1>
+
+    <!--
+    <div id="tooltip"></div>-->
+    <button class="sort" onclick="showStates()">State Map</button>
+
+    <button class="sort" onclick="showCounties()">County Map</button>
+    <div id="viz">
+        <div class="svg-pan-zoom-container" id="stateZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
+            data-pan-on-drag="button: left;" style="height: 80vh;">
+            <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
+                <g transform="translate(0 0)"></g>
+            </svg>
+        </div>
+        <div class="svg-pan-zoom-container" id="countyZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
+            data-pan-on-drag="button: left;" style="height: 80vh;">
+            <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="countyMap">
+                <g transform="translate(0 0)"></g>
+            </svg>
+        </div>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom-container@0.2.7"></script>
+        <script src="lineChart.js"></script>
+        <script src="map.js"></script>
+        <script src="app.js"></script>
+    </div>
+    <div id="sources">
+        Sources
+        <br>
+        <a href="http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922">Map</a>
+        <a href="https://eric.clst.org/tech/usgeojson/">US GeoJSON Data</a>
+        <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html">Census
+            Bureau Data</a>
+        <a href="https://www.kaggle.com/sudalairajkumar/covid19-in-usa?select=us_counties_covid19_daily.csv">COVID-19
+            Data</a>
+        <a href="">Source</a>
+        <a href="">Source</a>
+
+    </div>
+    <br>
+    <div id="contributors">
+        Contributors
+        <br>
+        <a>Evan Ruder </a>
+        <a>Siddhi Joshi</a>
+        <a>Nikhil Morar</a>
+        <a>Darshan Patni</a>
+
+    </div>
+
+
+</body>
+
+</html>
