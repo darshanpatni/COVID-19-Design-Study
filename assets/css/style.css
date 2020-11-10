@@ -7,7 +7,8 @@ body {
 h1 {
     text-align: center;
     color: #0f2203;
-    background-color: #E072A4;
+    background-color: #B0E298;
+    border: 2px #3D3B8E solid;
     -webkit-text-stroke: 1px rgb(119, 119, 119);
 }
 
@@ -15,8 +16,8 @@ h1 {
 #contributors {
     text-align: center;
     color: black;
-    background-color: #E072A4;
-    border: 3px #3D3B8E solid;
+    background-color: #B0E298;
+    border: 2px #3D3B8E solid;
 }
 
 #viz {
@@ -64,7 +65,18 @@ svg {
     color: #3D3B8E;
     background-color: #EBEBEB;
 }
-
-path:hover {
-    fill-opacity: .5;
-}
+table, th, td {
+    height: 30px;
+    width: 200px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: center;
+    table-layout:fixed;
+  }
+  table{
+      background-color: #EBEBEB;
+  }
+  td{
+    color:navy;
+    background-color:#EBEBEB;
+  }

@@ -13,26 +13,45 @@ var counties;
 var stateZoom = document.getElementById("stateZoom");
 var countyZoom = document.getElementById("countyZoom");
 
-d3.select("#stateMap").style("visibility", 'hidden')
-stateZoom.style.visibility = "hidden";
+var Mdiv = d3.select("body").append("div")
+    .attr("class", "mtooltip")
+    .style("opacity", 0);
+var Pdiv = d3.select("#tooltip")
+
+d3.select("#countyMap").style("visibility", 'hidden')
+countyZoom.style.visibility = "hidden";
 
 function drawStates() {
+    console.log("states being drawn");
     var svg = d3.select("#stateMap")
         .attr("width", w)
         .attr("height", h)
     d3.json("assets/knowledge/map/gz_2010_us_040_00_20m.json", function (data) {
         states = data;
-        for (var i = 0; i < data.features.length; i++) {
-            //console.log(i);
-            svg.selectAll("path")
-                .data(data.features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .style("fill", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
-                .attr("stroke", "white")
-                .attr("stroke-width", "1px");
-        }
+        //console.log(i);
+        svg.selectAll("path")
+            .data(data.features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .style("fill", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
+            .attr("stroke", "black")
+            .attr("stroke-width", "1px")
+            .on("mouseover", function (state) {
+                //console.log(state.properties.NAME);
+                //console.log(state.properties);
+                d3.select(this)
+                    .style("fill-opacity", '.25')
+                Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td></td><td></td><td></td></tr></table>")
+            })
+            .on("mouseout", function (state) {
+                d3.select(this)
+                    .style("fill-opacity", '1')
+                //optional to make table empty
+                Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+            })
+
+
         console.log(data.features.length);
     });
 }
@@ -42,16 +61,29 @@ function drawCounties() {
         .attr("height", h)
     d3.json("assets/knowledge/map/gz_2010_us_050_00_20m.json", function (data) {
         counties = data;
-        for (var i = 0; i < data.features.length; i++) {
-            //console.log(i);
-            svg.selectAll("path")
-                .data(data.features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .attr("stroke", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
-                .attr("stroke-width", "1px");
-        }
+        //console.log(i);
+        svg.selectAll("path")
+            .data(data.features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .attr("stroke", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
+            .attr("stroke-width", "1px")
+            .on("mouseover", function (county) {
+                console.log(county.properties.NAME);
+                //console.log(county.properties);
+                d3.select(this)
+                    .style("fill-opacity", '.25')
+                Pdiv.html("<table><tr><th>County</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td></td><td></td><td></td></tr></table>")
+            })
+            .on("mouseout", function (state) {
+                d3.select(this)
+                    .style("fill-opacity", '1')
+                //optional to make table empty
+                Pdiv.html("<table><tr><th>County</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+            })
+
+
         console.log(data.features.length);
     });
 }

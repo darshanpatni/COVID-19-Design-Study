@@ -17,6 +17,7 @@ d3.select("#stateMap").style("visibility", 'hidden')
 stateZoom.style.visibility = "hidden";
 
 function drawStates() {
+    console.log("Hello");
     var svg = d3.select("#stateMap")
         .attr("width", w)
         .attr("height", h)
