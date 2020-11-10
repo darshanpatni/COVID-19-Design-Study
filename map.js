@@ -12,7 +12,10 @@ var states;
 var counties;
 var stateZoom = document.getElementById("stateZoom");
 var countyZoom = document.getElementById("countyZoom");
-var stateDeaths;
+var stateDeaths = {};
+var stateTests = {};
+var stateCases = {};
+
 
 var Mdiv = d3.select("body").append("div")
     .attr("class", "mtooltip")
@@ -30,8 +33,13 @@ function drawStates() {
     d3.json("assets/knowledge/map/gz_2010_us_040_00_20m.json", function (statesData) {
         d3.csv("assets/knowledge/covid-data/us_states_covid19_daily.csv", function (statesCovid) {
             for (i = 0; i < 56; i++) {
-                console.log(statesCovid[i].death);
+                stateDeaths[statesCovid[i].full] = Number(statesCovid[i].death).toLocaleString();
+                stateTests[statesCovid[i].full] = Number(statesCovid[i].total).toLocaleString();
+                stateCases[statesCovid[i].full] = Number(statesCovid[i].positive).toLocaleString();
+                //console.log(statesCovid[i].death);
             }
+            //console.log(stateDeaths);
+            console.log(stateTests);
             //console.log(statesCovid);
             states = statesData;
             //console.log(i);
@@ -48,7 +56,7 @@ function drawStates() {
                     //console.log(state.properties);
                     d3.select(this)
                         .style("fill-opacity", '.25')
-                    Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td></td><td></td><td></td></tr></table>")
+                    Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td>" + stateTests[state.properties.NAME] + "</td><td>" + stateCases[state.properties.NAME] + "</td><td>" + stateDeaths[state.properties.NAME] + "</td></tr></table>")
                 })
                 .on("mouseout", function (state) {
                     d3.select(this)
