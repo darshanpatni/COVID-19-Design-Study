@@ -98,7 +98,7 @@ function drawCounties() {
                     .append("path")
                     .attr("d", path)
                     .attr("stroke", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
-                    .attr("stroke-width", "1px")
+                    .attr("stroke-width", ".25px")
                     .on("mouseover", function (county) {
                         //console.log(county.properties.NAME);
                         //console.log(county.properties);
