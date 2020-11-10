@@ -16,6 +16,8 @@ var stateDeaths = {};
 var stateTests = {};
 var stateCases = {};
 var stateCodes = {};
+var countyCases = {};
+var countyDeaths = {};
 
 var Mdiv = d3.select("body").append("div")
     .attr("class", "mtooltip")
@@ -44,7 +46,7 @@ function drawStates() {
             //console.log(stateDeaths);
             //console.log(stateTests);
             //console.log(statesCovid);
-            console.log(stateCodes);
+            //console.log(stateCodes);
             states = statesData;
             //console.log(i);
             svg.selectAll("path")
@@ -81,6 +83,11 @@ function drawCounties() {
     d3.json("assets/knowledge/map/gz_2010_us_040_00_20m.json", function (statesData) {
         d3.json("assets/knowledge/map/gz_2010_us_050_00_20m.json", function (countiesData) {
             d3.csv("assets/knowledge/covid-data/us_counties_covid19_daily.csv", function (countiesCovid) {
+                for (i = 570098; i < 573338; i++) {
+                    countyDeaths[countiesCovid[i].county] = Number(countiesCovid[i].deaths).toLocaleString();
+                    countyCases[countiesCovid[i].county] = Number(countiesCovid[i].cases).toLocaleString();
+                    //console.log(countiesCovid[i]);
+                }
                 counties = countiesData;
                 //console.log(countiesCovid);
                 //console.log(statesData);
@@ -97,7 +104,7 @@ function drawCounties() {
                         //console.log(county.properties);
                         d3.select(this)
                             .style("fill-opacity", '.45')
-                        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td></td><td></td></tr></table>")
+                        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td>" + countyCases[county.properties.NAME] + "</td><td>" + countyDeaths[county.properties.NAME] + "</td></tr></table>")
                     })
                     .on("mouseout", function (state) {
                         d3.select(this)
