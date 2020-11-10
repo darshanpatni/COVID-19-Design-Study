@@ -15,7 +15,7 @@ var countyZoom = document.getElementById("countyZoom");
 var stateDeaths = {};
 var stateTests = {};
 var stateCases = {};
-
+var stateCodes = {};
 
 var Mdiv = d3.select("body").append("div")
     .attr("class", "mtooltip")
@@ -32,6 +32,9 @@ function drawStates() {
         .attr("height", h)
     d3.json("assets/knowledge/map/gz_2010_us_040_00_20m.json", function (statesData) {
         d3.csv("assets/knowledge/covid-data/us_states_covid19_daily.csv", function (statesCovid) {
+            for (i = 0; i < statesData.features.length; i++) {
+                stateCodes[statesData.features[i].properties.STATE] = statesData.features[i].properties.NAME;
+            }
             for (i = 0; i < 56; i++) {
                 stateDeaths[statesCovid[i].full] = Number(statesCovid[i].death).toLocaleString();
                 stateTests[statesCovid[i].full] = Number(statesCovid[i].total).toLocaleString();
@@ -39,8 +42,9 @@ function drawStates() {
                 //console.log(statesCovid[i].death);
             }
             //console.log(stateDeaths);
-            console.log(stateTests);
+            //console.log(stateTests);
             //console.log(statesCovid);
+            console.log(stateCodes);
             states = statesData;
             //console.log(i);
             svg.selectAll("path")
@@ -55,7 +59,7 @@ function drawStates() {
                     //console.log(state.properties.NAME);
                     //console.log(state.properties);
                     d3.select(this)
-                        .style("fill-opacity", '.25')
+                        .style("fill-opacity", '.45')
                     Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td>" + stateTests[state.properties.NAME] + "</td><td>" + stateCases[state.properties.NAME] + "</td><td>" + stateDeaths[state.properties.NAME] + "</td></tr></table>")
                 })
                 .on("mouseout", function (state) {
@@ -74,33 +78,37 @@ function drawCounties() {
     var svg = d3.select("#countyMap")
         .attr("width", w)
         .attr("height", h)
-    d3.json("assets/knowledge/map/gz_2010_us_050_00_20m.json", function (countiesData) {
-        d3.csv("", function () {
-            counties = countiesData;
-            //console.log(i);
-            svg.selectAll("path")
-                .data(countiesData.features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .attr("stroke", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
-                .attr("stroke-width", "1px")
-                .on("mouseover", function (county) {
-                    //console.log(county.properties.NAME);
-                    //console.log(county.properties);
-                    d3.select(this)
-                        .style("fill-opacity", '.25')
-                    Pdiv.html("<table><tr><th>County</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td></td><td></td><td></td></tr></table>")
-                })
-                .on("mouseout", function (state) {
-                    d3.select(this)
-                        .style("fill-opacity", '1')
-                    //optional to make table empty
-                    Pdiv.html("<table><tr><th>County</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
-                })
+    d3.json("assets/knowledge/map/gz_2010_us_040_00_20m.json", function (statesData) {
+        d3.json("assets/knowledge/map/gz_2010_us_050_00_20m.json", function (countiesData) {
+            d3.csv("assets/knowledge/covid-data/us_counties_covid19_daily.csv", function (countiesCovid) {
+                counties = countiesData;
+                //console.log(countiesCovid);
+                //console.log(statesData);
+                //console.log(countiesData);
+                svg.selectAll("path")
+                    .data(countiesData.features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path)
+                    .attr("stroke", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
+                    .attr("stroke-width", "1px")
+                    .on("mouseover", function (county) {
+                        //console.log(county.properties.NAME);
+                        //console.log(county.properties);
+                        d3.select(this)
+                            .style("fill-opacity", '.45')
+                        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td></td><td></td></tr></table>")
+                    })
+                    .on("mouseout", function (state) {
+                        d3.select(this)
+                            .style("fill-opacity", '1')
+                        //optional to make table empty
+                        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+                    })
 
 
-            console.log(countiesData.features.length);
+                console.log(countiesData.features.length);
+            });
         });
     });
 }
@@ -116,5 +124,5 @@ function showCounties() {
     countyZoom.style.visibility = "visible";
     d3.select("#stateMap").style("visibility", 'hidden')
     d3.select("#countyMap").style("visibility", 'visible')
-    Pdiv.html("<table><tr><th>County</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+    Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
 }
