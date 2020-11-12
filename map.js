@@ -8,6 +8,9 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
+var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
+var countyColor = d3.scale.linear().domain([1, 25000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
+
 var states;
 var counties;
 var stateZoom = document.getElementById("stateZoom");
@@ -29,10 +32,7 @@ countyZoom.style.visibility = "hidden";
 
 function drawStates() {
     console.log("states being drawn");
-    var t = Math.random() * 1;
-    //console.log(d3.interpolateReds(t));
-    var svg = d3.select("body").append("svg").attr("width", 1000).attr("height", 400)
-    var myColor = d3.scale.linear().domain([1, 100]).range(["white", "red"])
+
     var svg = d3.select("#stateMap")
         .attr("width", w)
         .attr("height", h)
@@ -59,7 +59,14 @@ function drawStates() {
                 .append("path")
                 .attr("d", path)
                 .style("fill", function (state) {
-                    return myColor(Math.random() * 100);
+                    try {
+                        //console.log(parseFloat(stateTests[state.properties.NAME].replace(/,/g, '')))
+                        return stateColor(parseFloat(stateTests[state.properties.NAME].replace(/,/g, '')));
+                    }
+                    catch (error) {
+                        console.error();
+                        return 0;
+                    }
                 })
                 .attr("stroke", "black")
                 .attr("stroke-width", "1px")
@@ -67,7 +74,7 @@ function drawStates() {
                     //console.log(state.properties.NAME);
                     //console.log(state.properties);
                     d3.select(this)
-                        .style("fill-opacity", '.35')
+                        .style("fill-opacity", '.5')
                     Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td>" + stateTests[state.properties.NAME] + "</td><td>" + stateCases[state.properties.NAME] + "</td><td>" + stateDeaths[state.properties.NAME] + "</td></tr></table>")
                 })
                 .on("mouseout", function (state) {
@@ -103,16 +110,26 @@ function drawCounties() {
                     .enter()
                     .append("path")
                     .attr("d", path)
-                    .attr("stroke", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
+                    .attr("fill", function (county) {
+                        try {
+                            //console.log(parseFloat(countyCases[county.properties.NAME].replace(/,/g, '')))
+                            return countyColor(parseFloat(countyCases[county.properties.NAME].replace(/,/g, '')));
+                        }
+                        catch (error) {
+                            console.error();
+                            return "rgb(220, 220, 280)";
+                        }
+                    })
+                    .attr("stroke", "black")
                     .attr("stroke-width", ".25px")
                     .on("mouseover", function (county) {
                         //console.log(county.properties.NAME);
                         //console.log(county.properties);
                         d3.select(this)
-                            .style("fill-opacity", '.45')
+                            .style("fill-opacity", '.5')
                         Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td>" + countyCases[county.properties.NAME] + "</td><td>" + countyDeaths[county.properties.NAME] + "</td></tr></table>")
                     })
-                    .on("mouseout", function (state) {
+                    .on("mouseout", function (county) {
                         d3.select(this)
                             .style("fill-opacity", '1')
                         //optional to make table empty
