@@ -29,6 +29,10 @@ countyZoom.style.visibility = "hidden";
 
 function drawStates() {
     console.log("states being drawn");
+    var t = Math.random() * 1;
+    //console.log(d3.interpolateReds(t));
+    var svg = d3.select("body").append("svg").attr("width", 1000).attr("height", 400)
+    var myColor = d3.scale.linear().domain([1, 100]).range(["white", "red"])
     var svg = d3.select("#stateMap")
         .attr("width", w)
         .attr("height", h)
@@ -48,20 +52,22 @@ function drawStates() {
             //console.log(statesCovid);
             //console.log(stateCodes);
             states = statesData;
-            //console.log(i);
+            //console.log(i); 
             svg.selectAll("path")
                 .data(statesData.features)
                 .enter()
                 .append("path")
                 .attr("d", path)
-                .style("fill", "rgb(" + 255 * Math.random() + "," + 255 * Math.random() + "," + 255 * Math.random() + ")")
+                .style("fill", function (state) {
+                    return myColor(Math.random() * 100);
+                })
                 .attr("stroke", "black")
                 .attr("stroke-width", "1px")
                 .on("mouseover", function (state) {
                     //console.log(state.properties.NAME);
                     //console.log(state.properties);
                     d3.select(this)
-                        .style("fill-opacity", '.45')
+                        .style("fill-opacity", '.35')
                     Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td>" + stateTests[state.properties.NAME] + "</td><td>" + stateCases[state.properties.NAME] + "</td><td>" + stateDeaths[state.properties.NAME] + "</td></tr></table>")
                 })
                 .on("mouseout", function (state) {
