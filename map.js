@@ -11,6 +11,9 @@ var path = d3.geo.path()
 var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["#6a6a6a", "rgb(255, 0, 0)"])
 var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
 
+var Gdiv = d3.select("body").append("div")
+    .attr("class", "gtooltip")
+
 var states;
 var counties;
 var stateZoom = document.getElementById("stateZoom");
@@ -28,9 +31,40 @@ var Mdiv = d3.select("body").append("div")
 var Pdiv = d3.select("#tooltip")
 
 d3.select("#countyMap").style("visibility", 'hidden')
+d3.select("#stateButton").transition()
+    .attr("class", "activeMap")
+d3.select("#CmapLegend").style("visibility", 'hidden')
 countyZoom.style.visibility = "hidden";
 
 function drawStates() {
+    var svg = d3.select("#SmapLegend");
+    svg.append("g")
+        .attr("class", "legendLinear")
+        .attr("transform", "translate(150,20)")
+        .style("font-size", "12px");
+    var stateLegend = d3.legend.color()
+        .scale(stateColor)
+        .shapeWidth(100)
+        .orient('horizontal')
+        .title("Tests by State")
+        .labels(["<=100,000", "2,750,000", "5,050,000", "7,525,000", ">=10,000,000"])
+        .on("cellclick", function (d) {
+            console.log(d);
+            d3.selectAll(".legendSelect").style("fill-opacity", "0")
+            d3.select(this)
+                .append("rect")
+                .attr("class", "legendSelect")
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 100)
+                .attr("height", 40)
+                .style("fill-opacity", ".25")
+
+        });
+
+
+    svg.select(".legendLinear")
+        .call(stateLegend);
     console.log("states being drawn");
 
     var svg = d3.select("#stateMap")
@@ -73,23 +107,55 @@ function drawStates() {
                 .on("mouseover", function (state) {
                     //console.log(state.properties.NAME);
                     //console.log(state.properties);
+                    Gdiv.transition()
+                        .duration(100)
+                        .style("opacity", .9);
+                    Gdiv.html(state.properties.NAME + "<br/>" + stateTests[state.properties.NAME] + " test(s) <br/>" + stateCases[state.properties.NAME] + " case(s)" + "<br/>" + stateDeaths[state.properties.NAME] + " death(s)")
+                        .style("left", (d3.event.pageX + 15) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
                     d3.select(this)
                         .style("fill-opacity", '.5')
                     Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td>" + stateTests[state.properties.NAME] + "</td><td>" + stateCases[state.properties.NAME] + "</td><td>" + stateDeaths[state.properties.NAME] + "</td></tr></table>")
                 })
                 .on("mouseout", function (state) {
+                    Gdiv = d3.selectAll(".gtooltip")
+                    Gdiv.transition()
+                        .duration(100)
+                        .style("opacity", 0);
                     d3.select(this)
                         .style("fill-opacity", '1')
                     //optional to make table empty
                     Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
                 })
-
-
             console.log(statesData.features.length);
         });
     });
 }
 function drawCounties() {
+    var svg = d3.select("#CmapLegend");
+    svg.append("g")
+        .attr("class", "legendSymbol")
+        .attr("transform", "translate(150,20)")
+        .style("font-size", "12px");
+    var legend = d3.legend.color()
+        .shapeWidth(100)
+        .orient('horizontal')
+        .scale(countyColor)
+        .title("Case(s) by County")
+        .labels(["<=1", "7,500", "15,000", "22,500", ">=30,000"])
+        .on("cellclick", function (d) {
+            //console.log(d);
+            var active = d.active ? false : true,
+                newOpacity = active ? 0 : 1
+            d3.select(this)
+                .transition()
+                .duration(100)
+                .style("opacity", newOpacity)
+            d.active = active;
+        });
+    svg.select(".legendSymbol")
+        .call(legend);
+
     var svg = d3.select("#countyMap")
         .attr("width", w)
         .attr("height", h)
@@ -125,11 +191,21 @@ function drawCounties() {
                     .on("mouseover", function (county) {
                         //console.log(county.properties.NAME);
                         //console.log(county.properties);
+                        Gdiv.transition()
+                            .duration(100)
+                            .style("opacity", .9);
+                        Gdiv.html(county.properties.NAME + "<br/>" + stateCodes[county.properties.STATE] + "<br/>" + countyCases[county.properties.NAME + stateCodes[county.properties.STATE]] + " case(s)" + "<br/>" + countyDeaths[county.properties.NAME + stateCodes[county.properties.STATE]] + " death(s)")
+                            .style("left", (d3.event.pageX + 15) + "px")
+                            .style("top", (d3.event.pageY - 100) + "px");
                         d3.select(this)
                             .style("fill-opacity", '.5')
                         Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td>" + countyCases[county.properties.NAME + stateCodes[county.properties.STATE]] + "</td><td>" + countyDeaths[county.properties.NAME + stateCodes[county.properties.STATE]] + "</td></tr></table>")
                     })
                     .on("mouseout", function (county) {
+                        Gdiv = d3.selectAll(".gtooltip")
+                        Gdiv.transition()
+                            .duration(100)
+                            .style("opacity", 0);
                         d3.select(this)
                             .style("fill-opacity", '1')
                         //optional to make table empty
@@ -142,17 +218,33 @@ function drawCounties() {
         });
     });
 }
-function showStates() {
-    stateZoom.style.visibility = "visible";
-    countyZoom.style.visibility = "hidden";
-    d3.select("#countyMap").style("visibility", 'hidden')
-    d3.select("#stateMap").style("visibility", 'visible')
-    Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
-}
-function showCounties() {
-    stateZoom.style.visibility = "hidden";
-    countyZoom.style.visibility = "visible";
-    d3.select("#stateMap").style("visibility", 'hidden')
-    d3.select("#countyMap").style("visibility", 'visible')
-    Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+function show(value) {
+    if (value == "states") {
+        d3.select("#stateButton").transition()
+            .attr("class", "activeMap")
+        d3.select("#countyButton").transition()
+            .attr("class", "sort")
+
+        d3.select("#CmapLegend").style("visibility", 'hidden')
+        stateZoom.style.visibility = "visible";
+        countyZoom.style.visibility = "hidden";
+        d3.select("#countyMap").style("visibility", 'hidden')
+        d3.select("#stateMap").style("visibility", 'visible')
+        d3.select("#SmapLegend").style("visibility", 'visible')
+        d3.select("#CmapLegend").style("visibility", 'hidden')
+        Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+    }
+    else if (value == "counties") {
+        d3.select("#stateButton").transition()
+            .attr("class", "sort")
+        d3.select("#countyButton").transition()
+            .attr("class", "activeMap")
+        stateZoom.style.visibility = "hidden";
+        countyZoom.style.visibility = "visible";
+        d3.select("#stateMap").style("visibility", 'hidden')
+        d3.select("#countyMap").style("visibility", 'visible')
+        d3.select("#SmapLegend").style("visibility", 'hidden')
+        d3.select("#CmapLegend").style("visibility", 'visible')
+        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+    }
 }

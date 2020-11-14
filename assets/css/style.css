@@ -54,13 +54,15 @@ svg {
     height: 30px;
     background-color: #3D3B8E;
     color: #EBEBEB;
-    transition-duration: 250ms;
     border-radius: 1%;
 }
 
-.sort:hover {
-    transform: scale(1.15);
-    border-radius: 5%;
+.activeMap {
+    margin-left: 8%;
+    font-size: 12px;
+    width: 172px;
+    height: 30px;
+    border-radius: 50%;
     font: bolder;
     color: #3D3B8E;
     background-color: #EBEBEB;
@@ -104,3 +106,14 @@ table, th, td {
 	font-family: 'Arial', serif;
 	font-size: 12x;
 }
+div.gtooltip{	
+    position: absolute;			
+    text-align: center;			
+    width: 150px;					
+    height: 75px;					
+    padding: 1px;				
+    font-size: 13px;		
+    background:rgb(255,200,200);
+    color:black;	
+    pointer-events: none;			
+  }
