@@ -6,5 +6,6 @@ drawStates();
 
 setTimeout(() => {  
 console.log(getCumulitiveDataForState("AK"));
+drawLineChartForState("AK");
 //TODO call drawLineChartForState here
 }, 2000);
