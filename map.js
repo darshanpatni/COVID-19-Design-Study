@@ -8,8 +8,8 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
-var countyColor = d3.scale.linear().domain([1, 25000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
+var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["#6a6a6a", "rgb(255, 0, 0)"])
+var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
 
 var states;
 var counties;
@@ -96,9 +96,9 @@ function drawCounties() {
     d3.json("assets/knowledge/map/gz_2010_us_040_00_20m.json", function (statesData) {
         d3.json("assets/knowledge/map/gz_2010_us_050_00_20m.json", function (countiesData) {
             d3.csv("assets/knowledge/covid-data/us_counties_covid19_daily.csv", function (countiesCovid) {
-                for (i = 570098; i < 573338; i++) {
-                    countyDeaths[countiesCovid[i].county] = Number(countiesCovid[i].deaths).toLocaleString();
-                    countyCases[countiesCovid[i].county] = Number(countiesCovid[i].cases).toLocaleString();
+                for (i = 568098; i < 573338; i++) {
+                    countyDeaths[countiesCovid[i].county + countiesCovid[i].full] = Number(countiesCovid[i].deaths).toLocaleString();
+                    countyCases[countiesCovid[i].county + countiesCovid[i].full] = Number(countiesCovid[i].cases).toLocaleString();
                     //console.log(countiesCovid[i]);
                 }
                 counties = countiesData;
@@ -112,8 +112,8 @@ function drawCounties() {
                     .attr("d", path)
                     .attr("fill", function (county) {
                         try {
-                            //console.log(parseFloat(countyCases[county.properties.NAME].replace(/,/g, '')))
-                            return countyColor(parseFloat(countyCases[county.properties.NAME].replace(/,/g, '')));
+                            //console.log(parseFloat(countyCases[county.properties.NAME+ stateCodes[county.properties.STATE]].replace(/,/g, ''));
+                            return countyColor(parseFloat(countyCases[county.properties.NAME + stateCodes[county.properties.STATE]].replace(/,/g, '')));
                         }
                         catch (error) {
                             console.error();
@@ -127,7 +127,7 @@ function drawCounties() {
                         //console.log(county.properties);
                         d3.select(this)
                             .style("fill-opacity", '.5')
-                        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td>" + countyCases[county.properties.NAME] + "</td><td>" + countyDeaths[county.properties.NAME] + "</td></tr></table>")
+                        Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td>" + countyCases[county.properties.NAME + stateCodes[county.properties.STATE]] + "</td><td>" + countyDeaths[county.properties.NAME + stateCodes[county.properties.STATE]] + "</td></tr></table>")
                     })
                     .on("mouseout", function (county) {
                         d3.select(this)
