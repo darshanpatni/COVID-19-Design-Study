@@ -20,6 +20,11 @@ function getStateDataForDate(state, date) {
     return stateData[state]["date_data"][date];
 }
 
+let attribute = {
+    TOTAL_CASES: "totalCases",
+    POSITIVE: "positive",
+    NEGATIVE: "negative"
+};
 
 // Set the dimensions of the canvas / graph
 var	margin = {top: 30, right: 20, bottom: 30, left: 50},
@@ -30,29 +35,37 @@ var	margin = {top: 30, right: 20, bottom: 30, left: 50},
 var	parseDate = d3.time.format("%Y%m%d").parse;
  
 // Set the ranges
-var	x = d3.time.scale().range([0, width]);
-var	y = d3.scale.linear().range([height, 0]);
+var	x;
+var y;
  
-// Define the axes
-var	xAxis = d3.svg.axis().scale(x)
-	.orient("bottom").ticks(5);
+// Declare the axes
+var	xAxis;  
+var	yAxis; 
  
-var	yAxis = d3.svg.axis().scale(y)
-	.orient("left").ticks(5);
- 
-// Define the line
-var	valueline = d3.svg.line()
-	.x(function(d) { return x(d.date); })
-	.y(function(d) { return y(d.positive); });
-    
+// Declare the line
+var	valueline ;
+
 // Adds the svg canvas
-var	svg = d3.select("body")
+var	svgTotalCases = d3.select("#totalCases")
 	.append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 	.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var svgPositive = d3.select("#positive")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svgNegative = d3.select("#negative")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");        
 /**
  * 
  * @param {String Abrrivation in Caps} state 
@@ -63,27 +76,31 @@ function drawLineChartForState(state) {
         data.forEach(function(d) {
             d.date = parseDate(d.date);
             d.positive = +d.positive;
+            d.negative = +d.negative;
+            d.totalTestResults = +d.totalTestResults;
         });
-     
-        // Scale the range of the data
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.positive; })]);
-     
-        // Add the valueline path.
-        svg.append("path")	
-            .attr("class", "line")
-            .attr("d", valueline(data));
-     
-        // Add the X Axis
-        svg.append("g")		
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-     
-        // Add the Y Axis
-        svg.append("g")		
-            .attr("class", "y axis")
-            .call(yAxis);
+    
+    drawTotalCases(data);
+    drawPostive(data);
+    drawNegative(data);
 	});
 }
 
+function drawTotalCases(data){
+
+ drawLineChart(data, width, height, svgTotalCases, attribute.TOTAL_CASES);
+
+}
+
+function drawPostive(data){
+
+ drawLineChart(data, width, height, svgPositive, attribute.POSITIVE);
+
+
+}
+
+function drawNegative(data){
+
+ drawLineChart(data, width, height, svgNegative, attribute.NEGATIVE);
+
+}
