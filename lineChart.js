@@ -20,31 +20,14 @@ function getStateDataForDate(state, date) {
     return stateData[state]["date_data"][date];
 }
 
-let attribute = {
-    TOTAL_CASES: "totalCases",
-    POSITIVE: "positive",
-    NEGATIVE: "negative"
-};
-
 // Set the dimensions of the canvas / graph
 var	margin = {top: 30, right: 20, bottom: 30, left: 50},
-	width = 600 - margin.left - margin.right,
+	width = 500 - margin.left - margin.right,
 	height = 270 - margin.top - margin.bottom;
  
 // Parse the date / time
 var	parseDate = d3.time.format("%Y%m%d").parse;
  
-// Set the ranges
-var	x;
-var y;
- 
-// Declare the axes
-var	xAxis;  
-var	yAxis; 
- 
-// Declare the line
-var	valueline ;
-
 // Adds the svg canvas
 var	svgTotalCases = d3.select("#totalCases")
 	.append("svg")
@@ -80,27 +63,21 @@ function drawLineChartForState(state) {
             d.totalTestResults = +d.totalTestResults;
         });
     
-    drawTotalCases(data);
-    drawPostive(data);
-    drawNegative(data);
+        drawTotalCases(data);
+        drawPostive(data);
+        drawNegative(data);
 	});
 }
 
 function drawTotalCases(data){
-
- drawLineChart(data, width, height, svgTotalCases, attribute.TOTAL_CASES);
+    drawLineChart(data, width, height, svgTotalCases, attribute.TOTAL_CASES);
 
 }
 
 function drawPostive(data){
-
- drawLineChart(data, width, height, svgPositive, attribute.POSITIVE);
-
-
+    drawLineChart(data, width, height, svgPositive, attribute.POSITIVE);
 }
 
 function drawNegative(data){
-
- drawLineChart(data, width, height, svgNegative, attribute.NEGATIVE);
-
+    drawLineChart(data, width, height, svgNegative, attribute.NEGATIVE);
 }

@@ -1,3 +1,9 @@
+let attribute = {
+    TOTAL_CASES: "totalCases",
+    POSITIVE: "positive",
+    NEGATIVE: "negative"
+};
+
 function drawLineChart(data, width, height, svg, attr) {
 
     var x = d3.time.scale().range([0, width]);
@@ -26,7 +32,7 @@ function drawLineChart(data, width, height, svg, attr) {
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([0, d3.max(data, function(d) {
         switch (attr) {
-            case attribÓute.TOTAL_CASES:
+            case attribute.TOTAL_CASES:
                 return d.totalTestResults;
             case attribute.POSITIVE:
                 return d.positive;

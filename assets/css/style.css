@@ -37,7 +37,7 @@ a:hover {
 }
 
 svg {
-    position: absolute;
+    /* position: absolute; */
 }
 
 .svg-pan-zoom-container {
@@ -81,4 +81,8 @@ path {
       stroke: grey;
       stroke-width: 1;
       shape-rendering: crispEdges;
+  }
+
+  .line-chart-container {
+      float: right;
   }
