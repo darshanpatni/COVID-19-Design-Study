@@ -37,9 +37,6 @@ a:hover {
     text-decoration: underline;
 }
 
-svg {
-    position: absolute;
-}
 
 .svg-pan-zoom-container {
     width: 900px;
@@ -94,6 +91,27 @@ table, th, td {
 	cursor: pointer;
 }
 
+path:hover {
+    fill-opacity: .5;
+}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+  }
+   
+  .axis path,
+  .axis line {
+      fill: none;
+      stroke: grey;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+  }
+
+  .line-chart-container {
+      float: right;
+  }
 .pagesubtitle {
 	color: black;
 	font-family: 'Arial', serif;
