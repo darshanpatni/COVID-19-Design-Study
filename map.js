@@ -8,7 +8,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["#6a6a6a", "rgb(255, 0, 0)"])
+var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["#252525", "rgb(255, 0, 0)"])
 var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
 
 var Gdiv = d3.select("body").append("div")
@@ -30,11 +30,11 @@ var Mdiv = d3.select("body").append("div")
     .style("opacity", 0);
 var Pdiv = d3.select("#tooltip")
 
-d3.select("#countyMap").style("visibility", 'hidden')
+d3.select("#countyMap").style("display", 'none')
 d3.select("#stateButton").transition()
     .attr("class", "activeMap")
-d3.select("#CmapLegend").style("visibility", 'hidden')
-countyZoom.style.visibility = "hidden";
+d3.select("#CmapLegend").style("display", 'none')
+countyZoom.style.display = "none";
 
 function drawStates() {
     var svg = d3.select("#SmapLegend");
@@ -106,7 +106,8 @@ function drawStates() {
                 .attr("stroke-width", "1px")
                 .on("mouseover", function (state) {
                     //console.log(state.properties.NAME);
-                    //console.log(state.properties);
+                    console.log(state.properties);
+                    drawLineChartForState(getAbbrForName(state.properties.NAME));
                     Gdiv.transition()
                         .duration(100)
                         .style("opacity", .9);
@@ -225,13 +226,13 @@ function show(value) {
         d3.select("#countyButton").transition()
             .attr("class", "sort")
 
-        d3.select("#CmapLegend").style("visibility", 'hidden')
-        stateZoom.style.visibility = "visible";
-        countyZoom.style.visibility = "hidden";
-        d3.select("#countyMap").style("visibility", 'hidden')
-        d3.select("#stateMap").style("visibility", 'visible')
-        d3.select("#SmapLegend").style("visibility", 'visible')
-        d3.select("#CmapLegend").style("visibility", 'hidden')
+        d3.select("#CmapLegend").style("display", 'none')
+        stateZoom.style.display = "block";
+        countyZoom.style.display = "none";
+        d3.select("#countyMap").style("display", 'none')
+        d3.select("#stateMap").style("display", 'block')
+        d3.select("#SmapLegend").style("display", 'block')
+        d3.select("#CmapLegend").style("display", 'none')
         Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
     }
     else if (value == "counties") {
@@ -239,12 +240,12 @@ function show(value) {
             .attr("class", "sort")
         d3.select("#countyButton").transition()
             .attr("class", "activeMap")
-        stateZoom.style.visibility = "hidden";
-        countyZoom.style.visibility = "visible";
-        d3.select("#stateMap").style("visibility", 'hidden')
-        d3.select("#countyMap").style("visibility", 'visible')
-        d3.select("#SmapLegend").style("visibility", 'hidden')
-        d3.select("#CmapLegend").style("visibility", 'visible')
+        stateZoom.style.display = "none";
+        countyZoom.style.display = "block";
+        d3.select("#stateMap").style("display", 'none')
+        d3.select("#countyMap").style("display", 'block')
+        d3.select("#SmapLegend").style("display", 'none')
+        d3.select("#CmapLegend").style("display", 'block')
         Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
     }
 }
