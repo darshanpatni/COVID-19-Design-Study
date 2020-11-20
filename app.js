@@ -1,11 +1,11 @@
 var STATE_HASHMAP = new Map();
-STATE_HASHMAP
 
 drawCounties();
 drawStates();
-
+document.onload = function() {
+}
 setTimeout(() => {  
-console.log(getCumulitiveDataForState("NY"));
-drawLineChartForState("NY");
+console.log(getCumulitiveDataForState("IN"));
+
 //TODO call drawLineChartForState here
 }, 2000);

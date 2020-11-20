@@ -1,15 +1,17 @@
 body {
-    background-color: #b5c5ad;
-    font-family: Verdana,Geneva,sans-serif;
+    background-color: #2e2e2e;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 15pt;
+    margin: 0;
 }
 
 h1 {
-    text-align: center;
-    color: #0f2203;
-    background-color: #B0E298;
-    border: 2px #3D3B8E solid;
-    -webkit-text-stroke: 1px rgb(119, 119, 119);
+    text-align: left;
+    color: white;
+    font-weight: 400;
+    padding: 10;
+    padding-left: 20;
+    font-size: xx-large;
 }
 
 #sources,
@@ -42,6 +44,8 @@ a:hover {
     width: 900px;
     height: 600px;
     position: absolute;
+    overflow: hidden !important;
+    background: rgb(0,0,0,.2);
 }
 
 .sort {
@@ -81,14 +85,16 @@ table, th, td {
   }
 
   .pagebutton {
-	background-color: rgb(157, 34, 53);
-	color: white;
-	font-family: 'Arial', serif;
-	font-size: 17px;
-	padding: 9px;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
+    background-color: rgb(157, 34, 53);
+    color: white;
+    font-family: 'Arial', serif;
+    font-size: 17px;
+    padding: 9px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    float: right;
+    margin: 12;
 }
 
 path:hover {
@@ -96,21 +102,42 @@ path:hover {
 }
 
 path { 
-    stroke: steelblue;
+    stroke: rgb(109, 109, 109);
     stroke-width: 2;
     fill: none;
-  }
-   
+}
+
+text{
+    fill: white;
+}
+
+path.confirmed{
+    stroke: red;
+    stroke-width: 3;
+    fill: none;
+}
+path.recovered{
+    stroke: #00ff00;
+    stroke-width: 3;
+    fill: none;
+}
+path.total-tests{
+    stroke: #0000ff;
+    stroke-width: 3;
+    fill: none;
+}   
   .axis path,
   .axis line {
       fill: none;
-      stroke: grey;
-      stroke-width: 1;
+      stroke: rgb(190, 190, 190);
+      stroke-width: 1.5;
       shape-rendering: crispEdges;
   }
 
   .line-chart-container {
       float: right;
+      font-size: x-small;
+      margin-right: 20;
   }
 .pagesubtitle {
 	color: black;
@@ -133,5 +160,62 @@ div.gtooltip{
     font-size: 13px;		
     background:rgb(255,200,200);
     color:black;	
-    pointer-events: none;			
+    pointer-events: none;	
+    opacity: 0;		
   }
+.chart-title{
+    position: absolute;
+    font-size: small;
+    padding: 0%;
+}
+div.confirmed{
+    padding: 10;
+    background: rgba(200, 54, 54, 0.5);
+    color: white;
+    margin-top: 10;
+}
+
+div.recovered{
+    padding: 10;
+    background: rgba(23, 201, 0, 0.5);
+    color: white;
+    margin-top: 10;
+}
+
+div.total-tests{
+    padding: 10;
+    background: rgba(7, 0, 216, 0.5);
+    color: white;
+    margin-top: 10;
+}
+
+.map-viz{
+    max-width: 900;
+}
+
+.map-legend{
+    background: rgb(0,0,0,0.4);
+    max-width: 100%;
+}
+
+.state-dropdown{
+    background: #474747;
+    color: white;
+    padding: 5;
+}
+
+select option {
+    color: black;
+    background: white;
+}
+
+.navigation-bar {
+    text-align: center;
+    font-weight: 350;
+    color: white;
+    background-color: #474747;
+}
+
+.main-content {
+    margin: 8px;
+}

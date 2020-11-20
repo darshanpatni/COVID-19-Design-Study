@@ -1,7 +1,8 @@
 let attribute = {
     TOTAL_CASES: "totalCases",
     POSITIVE: "positive",
-    NEGATIVE: "negative"
+    NEGATIVE: "negative",
+    RECOVERED: "recovered"
 };
 
 function drawLineChart(data, width, height, svg, attr) {
@@ -13,7 +14,7 @@ function drawLineChart(data, width, height, svg, attr) {
         .orient("bottom").ticks(5);
 
     var yAxis = d3.svg.axis().scale(y)
-        .orient("left").ticks(5);
+        .orient("right").ticks(5);
 
     var valueline = d3.svg.line()
         .x(function(d) { return x(d.date); })
@@ -25,6 +26,8 @@ function drawLineChart(data, width, height, svg, attr) {
                     return y(d.positive);
                 case attribute.NEGATIVE:
                     return y(d.negative);
+                case attribute.RECOVERED:
+                    return y(d.recovered);
             }
         });
 
@@ -33,19 +36,35 @@ function drawLineChart(data, width, height, svg, attr) {
     y.domain([0, d3.max(data, function(d) {
         switch (attr) {
             case attribute.TOTAL_CASES:
-                return d.totalTestResults;
+                return d.totalTestResults+(0.1*d.totalTestResults);
             case attribute.POSITIVE:
-                return d.positive;
+                return d.positive+(0.1*d.positive);
             case attribute.NEGATIVE:
                 return d.negative;
+            case attribute.RECOVERED:
+                return d.positive+(0.1*d.positive);
         }
     })]);
 
     // Add the valueline path.
-    svg.append("path")
+    var path = svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
-
+    switch (attr) {
+        case attribute.TOTAL_CASES:
+            path.attr("class", "total-tests");
+            break;
+        case attribute.POSITIVE:
+            path.attr("class", "confirmed");
+            break;
+        case attribute.NEGATIVE:
+            path.attr("class", "recovered");
+            break;
+        case attribute.RECOVERED:
+            path.attr("class", "recovered");
+            break;
+    }
+    
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
@@ -55,5 +74,6 @@ function drawLineChart(data, width, height, svg, attr) {
     // Add the Y Axis
     svg.append("g")
         .attr("class", "y axis")
+        .attr("transform", "translate(" + width + " ,0)")	
         .call(yAxis);
 }
