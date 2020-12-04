@@ -235,11 +235,12 @@ function drawTopTenLineCharts() {
     var divTests = d3.select("#question-2");
     var divRecovered = d3.select("#question-4");
     var divDeaths = d3.select("#question-5");
-    // let rowOneStates = ["CA","TX", "FL", "NY", "NJ", "IL", "GA", "AZ", "PA", "NC", "LA", "MI", "TN", "VA", "OH", "AL", "SC"];
+
     let topTenPositiveStates = ["CA", "TX", "FL", "NY", "GA", "IL", "AZ", "NC", "NJ", "TN"];
     let topTenTestsStates = ["CA", "NY", "TX", "IL", "FL", "MA", "MI", "NJ", "OH", "NC"];
     let topTenRecoveredStates = ["TX", "NC", "TN", "LA", "OH", "PA", "MA", "MI", "MN", "NY"];
     let topTenDeathStates = ["NY", "NJ", "CA", "TX", "FL", "MA", "IL", "PA", "MI", "GA"];
+    
     d3.csv("assets/knowledge/covid-data/states/CA.csv", function(error, data) {
         data.forEach(function(d) {
             d.date = parseDate(d.date);
@@ -309,10 +310,6 @@ function drawGoingDownLineCharts() {
             drawLineChartsInRow(state, goingUpDiv, data, attribute.POSITIVE_INC, 60);
         });
     });
-}
-
-function drawGoingUpLineCharts() {
-
 }
 
 function drawLineChartsInRow(state, container, mainData, attribute, slice) {

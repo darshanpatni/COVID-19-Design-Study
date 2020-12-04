@@ -17,9 +17,9 @@ h1 {
 #sources,
 #contributors {
     text-align: center;
-    color: black;
-    background-color: #B0E298;
-    border: 2px #3D3B8E solid;
+    color: white;
+    background-color: #474747;
+    border: 2px #484848;
 }
 
 #viz {
@@ -47,28 +47,28 @@ a:hover {
 }
 
 .sort {
-    margin-left: 8%;
+    /* margin-left: 8%; */
     font-size: 12px;
-    width: 170px;
+    width: 120px;
     height: 30px;
     background-color: #474747;
     color: #EBEBEB;
     border-radius: 1%;
 }
 .sortRadio {
-    margin-left: 8%;
-    font-size: 17px;
-    width: 275px;
-    height: 30px;
+    font-size: 15px;
+    padding: 5px 10px;
     background-color: #474747;
     color: #EBEBEB;
+    margin-left: 42.8%;
+    position: absolute;
 }
 .activeMap {
-    margin-left: 8%;
+    /* margin-left: 8%; */
     font-size: 12px;
-    width: 172px;
+    width: 120px;
     height: 30px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     font: bolder;
     color: black;
     background-color: #EBEBEB;
@@ -198,7 +198,7 @@ div.confirmed{
     padding: 10;
     background: rgba(200, 54, 54, 0.5);
     color: white;
-    margin-top: 10;
+    margin-top: 5;
 }
 
 div.recovered{
@@ -229,6 +229,8 @@ div.total-tests{
     background: #474747;
     color: white;
     padding: 5;
+    float: right;
+    margin-right: 20px;
 }
 
 select option {
@@ -293,4 +295,8 @@ select option {
     padding-right: 25%;
     padding-bottom: 2%;
     text-align: left;
+}
+
+hr.divider{
+    border-color: #555;
 }
