@@ -14,42 +14,30 @@
 <body>
 
     <div class="navigation-bar">
-        
+
         <input class="pagebutton" type="button" value="Documentation"
-                    onclick="window.location.href='documentation.html'" />
+            onclick="window.location.href='documentation.html'" />
         <h1>COVID-19 Data Visualization</h1>
     </div>
 
     <div class="main-content">
+        <div class="sortRadio" style="margin-left:10%;">
+            <input id="casesCheckBox" type="checkbox" value="casesCheckBox" onclick="changeLegend(value)"> Cases
+            <input id="recoveredCheckBox" type="checkbox" value="recoveredCheckBox" onclick="changeLegend(value)">
+            Recovered
+            <input id="testedCheckBox" type="checkbox" value="testedCheckBox" onclick="changeLegend(value)"> Tested
+        </div>
+        <br>
         <button id="stateButton" class="sort" value="states" onclick="show(value)">State Map</button>
         <button id="countyButton" class="sort" value="counties" onclick="show(value)">County Map</button>
-        <select onchange="show(value)">
-            <option>Select map:</option>
-            <option value="states">States</option>
-            <option value="counties">Counties</option>
-        </select>
-        <select>
-            <option value="">Select state:</option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DE">Delaware</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-            <option value="HI">Hawaii</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-        </select>
         <hr />
-    
+        <div id="d3-legend-v3" class="map-legend">
+            <svg style="position:absolute;" id="SmapLegend" width="900" height="120"></svg>
+            <svg style="position:absolute;" id="CmapLegend" width="900" height="120"></svg>
+        </div>
         <div id="viz">
             <div class="line-chart-container" id="line-chart-container">
-                <select class = "state-dropdown" id="state-dropdown" name="state" onchange="selectStateFromDropDown()">
+                <select class="state-dropdown" id="state-dropdown" name="state" onchange="selectStateFromDropDown()">
                 </select>
                 <div id="positive" class="confirmed">
                     <p class="chart-title">Confirmed</p>
@@ -61,55 +49,51 @@
                     <p class="chart-title">Tested</p>
                 </div>
             </div>
-            <div class="map-viz">
-                <div id="d3-legend-v3" class="map-legend">
-                    <svg id="SmapLegend" width="900" height="120"></svg>
-                    <svg id="CmapLegend" width="900" height="120"></svg>
-                </div>
-                <div id="tooltip" style="visibility: hidden; position: absolute;">
-                    <table height="100px" width="100px">
-                        <tr>
-                            <th>State</th>
-                            <th>Tests</th>
-                            <th>Cases</th>
-                            <th>Deaths</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-            
-                </div>
-        
-                <div class="svg-pan-zoom-container" id="stateZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-                    data-pan-on-drag="button: left;" style="height: 80vh;">
-                    <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
-                        <g transform="translate(0 0)"></g>
-                    </svg>
-                </div>
-                <div class="svg-pan-zoom-container" id="countyZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-                    data-pan-on-drag="button: left;" style="height: 80vh;">
-                    <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="countyMap">
-                        <g transform="translate(0 0)"></g>
-                    </svg>
-                </div>
-            </div>
-    </div>
-    
-        
-        
+            <div class="map-viz"></div>
+            <div id="tooltip" style="visibility: hidden; position: absolute;">
+                <table height="100px" width="100px">
+                    <tr>
+                        <th>State</th>
+                        <th>Tests</th>
+                        <th>Cases</th>
+                        <th>Deaths</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
 
-        <script src="https://d3js.org/d3.v3.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.13.0/d3-legend.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom-container@0.2.7"></script>
-        <script src="stateNameUtility.js"></script>
-        <script src="lineChartUtility.js"></script>
-        <script src="lineChart.js"></script>
-        <script src="map.js"></script>
-        <script src="app.js"></script>
+            </div>
+
+            <div class="svg-pan-zoom-container" id="stateZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
+                data-pan-on-drag="button: left;" style="height: 80vh;">
+                <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
+                    <g transform="translate(0 0)"></g>
+                </svg>
+            </div>
+            <div class="svg-pan-zoom-container" id="countyZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
+                data-pan-on-drag="button: left;" style="height: 80vh;">
+                <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="countyMap">
+                    <g transform="translate(0 0)"></g>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.13.0/d3-legend.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom-container@0.2.7"></script>
+    <script src="stateNameUtility.js"></script>
+    <script src="lineChartUtility.js"></script>
+    <script src="lineChart.js"></script>
+    <script src="map.js"></script>
+    <script src="app.js"></script>
     </div>
     <div id="sources">
         Sources

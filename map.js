@@ -8,8 +8,14 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["#252525", "rgb(255, 0, 0)"])
-var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
+var casesCheckBox = document.getElementById("casesCheckBox");
+casesCheckBox.checked = true;
+var recoveredCheckBox = document.getElementById("recoveredCheckBox");
+var testedCheckBox = document.getElementById("testedCheckBox");
+var stateColor = d3.scale.linear().domain([5000, 800000]).range(["rgb(220,225,225)", "rgb(255, 0, 0)"])
+var title = "Confirmed Cases by State";
+var labels = ["<=5,000", "150,000", "300,000", "550,000", ">=800,000"];
+var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 255)", "rgb(255, 0, 0)"])
 
 var Gdiv = d3.select("body").append("div")
     .attr("class", "gtooltip")
@@ -30,11 +36,11 @@ var Mdiv = d3.select("body").append("div")
     .style("opacity", 0);
 var Pdiv = d3.select("#tooltip")
 
-d3.select("#countyMap").style("display", 'none')
+d3.select("#countyMap").style("visibility", 'hidden')
 d3.select("#stateButton").transition()
     .attr("class", "activeMap")
-d3.select("#CmapLegend").style("display", 'none')
-countyZoom.style.display = "none";
+d3.select("#CmapLegend").style("visibility", 'hidden')
+countyZoom.style.visibility = "hidden";
 
 function drawStates() {
     var svg = d3.select("#SmapLegend");
@@ -46,20 +52,10 @@ function drawStates() {
         .scale(stateColor)
         .shapeWidth(100)
         .orient('horizontal')
-        .title("Tests by State")
-        .labels(["<=100,000", "2,750,000", "5,050,000", "7,525,000", ">=10,000,000"])
+        .title(title)
+        .labels(labels)
         .on("cellclick", function (d) {
             console.log(d);
-            d3.selectAll(".legendSelect").style("fill-opacity", "0")
-            d3.select(this)
-                .append("rect")
-                .attr("class", "legendSelect")
-                .attr("x", 0)
-                .attr("y", 0)
-                .attr("width", 100)
-                .attr("height", 40)
-                .style("fill-opacity", ".25")
-
         });
 
 
@@ -93,9 +89,10 @@ function drawStates() {
                 .append("path")
                 .attr("d", path)
                 .style("fill", function (state) {
+                    //console.log("made it");
                     try {
                         //console.log(parseFloat(stateTests[state.properties.NAME].replace(/,/g, '')))
-                        return stateColor(parseFloat(stateTests[state.properties.NAME].replace(/,/g, '')));
+                        return stateColor(parseFloat(stateCases[state.properties.NAME].replace(/,/g, '')));
                     }
                     catch (error) {
                         console.error();
@@ -106,23 +103,21 @@ function drawStates() {
                 .attr("stroke-width", "1px")
                 .on("mouseover", function (state) {
                     //console.log(state.properties.NAME);
-                    console.log(state.properties);
+                    //console.log(state.properties);
                     drawLineChartForState(getAbbrForName(state.properties.NAME));
-                    Gdiv.transition()
-                        .duration(100)
-                        .style("opacity", .9);
+                    //no transition
+                    Gdiv.style("opacity", .9);
                     Gdiv.html(state.properties.NAME + "<br/>" + stateTests[state.properties.NAME] + " test(s) <br/>" + stateCases[state.properties.NAME] + " case(s)" + "<br/>" + stateDeaths[state.properties.NAME] + " death(s)")
                         .style("left", (d3.event.pageX + 15) + "px")
                         .style("top", (d3.event.pageY - 100) + "px");
                     d3.select(this)
-                        .style("fill-opacity", '.5')
+                        .style("fill-opacity", '.75')
                     Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + state.properties.NAME + "</td><td>" + stateTests[state.properties.NAME] + "</td><td>" + stateCases[state.properties.NAME] + "</td><td>" + stateDeaths[state.properties.NAME] + "</td></tr></table>")
                 })
                 .on("mouseout", function (state) {
                     Gdiv = d3.selectAll(".gtooltip")
-                    Gdiv.transition()
-                        .duration(100)
-                        .style("opacity", 0);
+                    //no transition
+                    Gdiv.style("opacity", 0);
                     d3.select(this)
                         .style("fill-opacity", '1')
                     //optional to make table empty
@@ -142,17 +137,10 @@ function drawCounties() {
         .shapeWidth(100)
         .orient('horizontal')
         .scale(countyColor)
-        .title("Case(s) by County")
+        .title("Confirmed Cases by County")
         .labels(["<=1", "7,500", "15,000", "22,500", ">=30,000"])
         .on("cellclick", function (d) {
             //console.log(d);
-            var active = d.active ? false : true,
-                newOpacity = active ? 0 : 1
-            d3.select(this)
-                .transition()
-                .duration(100)
-                .style("opacity", newOpacity)
-            d.active = active;
         });
     svg.select(".legendSymbol")
         .call(legend);
@@ -177,9 +165,9 @@ function drawCounties() {
                     .enter()
                     .append("path")
                     .attr("d", path)
-                    .attr("fill", function (county) {
+                    .style("fill", function (county) {
                         try {
-                            //console.log(parseFloat(countyCases[county.properties.NAME+ stateCodes[county.properties.STATE]].replace(/,/g, ''));
+                            //console.log(parseFloat(countyCases[county.properties.NAME + stateCodes[county.properties.STATE]].replace(/,/g, '')));
                             return countyColor(parseFloat(countyCases[county.properties.NAME + stateCodes[county.properties.STATE]].replace(/,/g, '')));
                         }
                         catch (error) {
@@ -192,21 +180,19 @@ function drawCounties() {
                     .on("mouseover", function (county) {
                         //console.log(county.properties.NAME);
                         //console.log(county.properties);
-                        Gdiv.transition()
-                            .duration(100)
-                            .style("opacity", .9);
+                        //no transition
+                        Gdiv.style("opacity", .9);
                         Gdiv.html(county.properties.NAME + "<br/>" + stateCodes[county.properties.STATE] + "<br/>" + countyCases[county.properties.NAME + stateCodes[county.properties.STATE]] + " case(s)" + "<br/>" + countyDeaths[county.properties.NAME + stateCodes[county.properties.STATE]] + " death(s)")
                             .style("left", (d3.event.pageX + 15) + "px")
                             .style("top", (d3.event.pageY - 100) + "px");
                         d3.select(this)
-                            .style("fill-opacity", '.5')
+                            .style("fill-opacity", '.75')
                         Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr><tr><td>" + county.properties.NAME + "</td><td>" + stateCodes[county.properties.STATE] + "</td><td>" + countyCases[county.properties.NAME + stateCodes[county.properties.STATE]] + "</td><td>" + countyDeaths[county.properties.NAME + stateCodes[county.properties.STATE]] + "</td></tr></table>")
                     })
                     .on("mouseout", function (county) {
                         Gdiv = d3.selectAll(".gtooltip")
-                        Gdiv.transition()
-                            .duration(100)
-                            .style("opacity", 0);
+                        //no transition
+                        Gdiv.style("opacity", 0);
                         d3.select(this)
                             .style("fill-opacity", '1')
                         //optional to make table empty
@@ -226,13 +212,13 @@ function show(value) {
         d3.select("#countyButton").transition()
             .attr("class", "sort")
 
-        d3.select("#CmapLegend").style("display", 'none')
-        stateZoom.style.display = "block";
-        countyZoom.style.display = "none";
-        d3.select("#countyMap").style("display", 'none')
-        d3.select("#stateMap").style("display", 'block')
-        d3.select("#SmapLegend").style("display", 'block')
-        d3.select("#CmapLegend").style("display", 'none')
+        d3.select("#CmapLegend").style("visibility", 'hidden')
+        stateZoom.style.visibility = "visible";
+        countyZoom.style.visibility = "hidden";
+        d3.select("#countyMap").style("visibility", 'hidden')
+        d3.select("#stateMap").style("visibility", 'visible')
+        d3.select("#SmapLegend").style("visibility", 'visible')
+        d3.select("#CmapLegend").style("visibility", 'hidden')
         Pdiv.html("<table><tr><th>State</th><th>Tests</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
     }
     else if (value == "counties") {
@@ -240,12 +226,38 @@ function show(value) {
             .attr("class", "sort")
         d3.select("#countyButton").transition()
             .attr("class", "activeMap")
-        stateZoom.style.display = "none";
-        countyZoom.style.display = "block";
-        d3.select("#stateMap").style("display", 'none')
-        d3.select("#countyMap").style("display", 'block')
-        d3.select("#SmapLegend").style("display", 'none')
-        d3.select("#CmapLegend").style("display", 'block')
+        stateZoom.style.visibility = "hidden";
+        countyZoom.style.visibility = "visible";
+        d3.select("#stateMap").style("visibility", 'hidden')
+        d3.select("#countyMap").style("visibility", 'visible')
+        d3.select("#SmapLegend").style("visibility", 'hidden')
+        d3.select("#CmapLegend").style("visibility", 'visible')
         Pdiv.html("<table><tr><th>County</th><th>State</th><th>Cases</th><th>Deaths</th></tr ><tr><td></td><td></td><td></td><td></td></tr></table>")
+    }
+}
+function changeLegend(selection) {
+    casesCheckBox.checked = false;
+    recoveredCheckBox.checked = false;
+    testedCheckBox.checked = false;
+    theChecked = document.getElementById(selection);
+    theChecked.checked = true;
+    console.log(selection);
+    if (selection == "casesCheckBox") {
+        stateColor = d3.scale.linear().domain([5000, 800000]).range(["rgb(220,225,225)", "rgb(255, 0, 0)"])
+        title = "Confirmed Cases by State";
+        labels = ["<=5,000", "150,000", "300,000", "550,000", ">=800,000"];
+        drawStates();
+    }
+    else if (selection == "recoveredCheckBox") {
+        stateColor = d3.scale.linear().domain([100000, 10000000]).range(["rgb(220,225,225)", "rgb(0, 255, 0)"])
+        title = "Recovered Patients by State";
+        labels = ["<=100,000", "2,750,000", "5,050,000", "7,525,000", ">=10,000,000"];
+        drawStates();
+    }
+    else if (selection == "testedCheckBox") {
+        stateColor = d3.scale.linear().domain([100000, 10000000]).range(["rgb(220,225,225)", "rgb(0, 0, 255)"])
+        title = "Tests Conducted by State";
+        labels = ["<=100,000", "2,750,000", "5,050,000", "7,525,000", ">=10,000,000"];
+        drawStates();
     }
 }
