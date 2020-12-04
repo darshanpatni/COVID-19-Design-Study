@@ -8,7 +8,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["#252525", "rgb(255, 0, 0)"])
+var stateColor = d3.scale.linear().domain([5000, 800000]).range(["#252525", "rgb(255, 0, 0)"])
 var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 280)", "rgb(255, 0, 0)"])
 
 var Gdiv = d3.select("body").append("div")
@@ -95,7 +95,7 @@ function drawStates() {
                 .style("fill", function (state) {
                     try {
                         //console.log(parseFloat(stateTests[state.properties.NAME].replace(/,/g, '')))
-                        return stateColor(parseFloat(stateTests[state.properties.NAME].replace(/,/g, '')));
+                        return stateColor(parseFloat(stateCases[state.properties.NAME].replace(/,/g, '')));
                     }
                     catch (error) {
                         console.error();
@@ -106,7 +106,6 @@ function drawStates() {
                 .attr("stroke-width", "1px")
                 .on("mouseover", function (state) {
                     //console.log(state.properties.NAME);
-                    console.log(state.properties);
                     drawLineChartForState(getAbbrForName(state.properties.NAME));
                     Gdiv.transition()
                         .duration(100)

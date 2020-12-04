@@ -24,7 +24,7 @@ h1 {
 
 #viz {
     width: 100%;
-    height: 900px;
+    height: 750px;
 }
 
 a,
@@ -111,6 +111,11 @@ text{
     fill: white;
 }
 
+.small-graph-text {
+    fill: white;
+    font-size: small;
+}
+
 path.confirmed{
     stroke: red;
     stroke-width: 3;
@@ -126,6 +131,22 @@ path.total-tests{
     stroke-width: 3;
     fill: none;
 }   
+
+path.confirmed-light{
+    stroke: red;
+    stroke-width: 1.5;
+    fill: none;
+}
+path.recovered-light{
+    stroke: #00ff00;
+    stroke-width: 1.5;
+    fill: none;
+}
+path.total-tests-light{
+    stroke: #0000ff;
+    stroke-width: 1.5;
+    fill: none;
+}
   .axis path,
   .axis line {
       fill: none;
@@ -218,4 +239,52 @@ select option {
 
 .main-content {
     margin: 8px;
+}
+
+.chart-count {
+    position: absolute;
+    padding: 0%;
+    padding-top: 2%;
+}
+
+.chart-date {
+    position: absolute;
+    padding: 0%;
+    padding-top: 1%;
+    font-size: small;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.lightRectangle {
+    fill: #666;
+    pointer-events: all;
+}
+
+.focus circle {
+    fill: white;
+}
+
+.question-container {
+    text-align: -webkit-center;
+}
+
+.question-viz-container{
+    width: 70%;
+}
+
+.questions {
+    color: white;
+}
+
+.question-desc {
+    color: white;
+    padding: 0%;
+    padding-left: 25%;
+    padding-right: 25%;
+    padding-bottom: 2%;
+    text-align: left;
 }

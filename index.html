@@ -53,12 +53,18 @@
                 </select>
                 <div id="positive" class="confirmed">
                     <p class="chart-title">Confirmed</p>
+                    <p class="chart-date" id="date"></p>
+                    <p class="chart-count" id="confirmed-count"></p>
                 </div>
                 <div id="recovered" class="recovered">
                     <p class="chart-title">Recovered</p>
+                    <p class="chart-date" id="date"></p>
+                    <p class="chart-count" id="recovered-count"></p>
                 </div>
                 <div id="totalCases" class="total-tests">
                     <p class="chart-title">Tested</p>
+                    <p class="chart-date" id="date"></p>
+                    <p class="chart-count" id="tested-count"></p>
                 </div>
             </div>
             <div class="map-viz">
@@ -97,7 +103,40 @@
                     </svg>
                 </div>
             </div>
-    </div>
+        </div>
+        <div class="question-container">
+                <h2 class="questions">Where the number of tests were highest</h2>
+                <p class="question-desc">
+                    States with highest number of tests till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time.
+                </p>
+                <div id="question-2" class="question-viz-container"></div>
+                <div class="question-viz-container"></div>
+                <h2 class="questions">Where the number of confirmed cases are highest</h2>
+                <p class="question-desc">
+                    States with highest number of cases till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time.
+                </p>
+                <div id="question-3" class="question-viz-container"></div>
+                <h2 class="questions">Where the number of recovered people are highest</h2>
+                <p class="question-desc">
+                    States with highest number of cases till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois, Florida, Georgia and California is missing.
+                </p>
+                <div id="question-4" class="question-viz-container"></div>
+                <h2 class="questions">Where the death toll is highest</h2>
+                <p class="question-desc">
+                    States with highest number of deaths till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois, Florida, Georgia and California is missing.
+                </p>
+                <div id="question-5" class="question-viz-container"></div>
+                <h2 class="questions">Where new cases are high but are going down</h2>
+                <p class="question-desc">
+                    States where new cases are higher but are going down over past 60 days. The charts, which are all on the same scale, show positive case increase per day.
+                </p>
+                <div id="question-1"></div>
+                <h2 class="questions">Where new cases are low but are going up</h2>
+                <p class="question-desc">
+                    States where new cases are low but are going up over past 60 days. The charts, which are all on the same scale, show positive case increase per day.
+                </p>
+                <div id="question-6"></div>
+        </div>
     
         
         
@@ -106,6 +145,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.13.0/d3-legend.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom-container@0.2.7"></script>
         <script src="stateNameUtility.js"></script>
+        <script src="chart.js"></script>
         <script src="lineChartUtility.js"></script>
         <script src="lineChart.js"></script>
         <script src="map.js"></script>
