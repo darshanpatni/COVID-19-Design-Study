@@ -143,7 +143,7 @@ function drawStatesByCases() {
     });
 }
 function drawStatesByRecovered() {
-    var stateColor = d3.scale.linear().domain([5000, 750000]).range(["rgb(220,225,225)", "rgb(0, 255, 0)"]);
+    var stateColor = d3.scale.linear().domain([0, 750000]).range(["rgb(220,225,225)", "rgb(0, 255, 0)"]);
     var title = "Recovered Patients by State";
     var labels = ["<=5000", "190,000", "375,000", "550,000", ">=750,000"];
     console.log("draw states");
@@ -179,7 +179,7 @@ function drawStatesByRecovered() {
                 stateDeaths[statesCovid[i].full] = Number(statesCovid[i].death).toLocaleString();
                 stateTests[statesCovid[i].full] = Number(statesCovid[i].total).toLocaleString();
                 stateCases[statesCovid[i].full] = Number(statesCovid[i].positive).toLocaleString();
-                stateRecovered[statesCovid[i].full] = Number(statesCovid[i].positive).toLocaleString();
+                stateRecovered[statesCovid[i].full] = Number(statesCovid[i].recovered).toLocaleString();
                 //console.log(statesCovid[i].death);
             }
             //console.log(stateDeaths);
