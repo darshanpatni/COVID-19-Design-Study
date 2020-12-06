@@ -13,10 +13,7 @@ var casesCheckBox = document.getElementById("casesCheckBox");
 casesCheckBox.checked = true;
 var recoveredCheckBox = document.getElementById("recoveredCheckBox");
 var testedCheckBox = document.getElementById("testedCheckBox");
-var stateColor = d3.scale.linear().domain([5000, 800000]).range(["rgb(220,225,225)", "rgb(255, 0, 0)"])
-var title = "Confirmed Cases by State";
-var labels = ["<=5,000", "150,000", "300,000", "550,000", ">=800,000"];
-var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(235, 245, 240)", "rgb(255, 0, 0)"])
+var countyColor = d3.scale.threshold().domain([100, 1000, 10000, 50000, 200000]).range(["rgb(235, 245, 240)", "rgb(220, 175, 175)", "rgb(220, 125, 125)", "rgb(220, 75, 75)", "rgb(255, 0, 0)"])
 
 var Gdiv = d3.select("body").append("div")
     .attr("class", "gtooltip")
@@ -54,18 +51,18 @@ d3.select("#SmapLegend2").style("visibility", 'hidden')
 d3.select("#sortRadio").style("visibility", 'visible')
 
 function drawStatesByCases() {
-    var stateColor = d3.scale.linear().domain([5000, 800000]).range(["rgb(220,225,225)", "rgb(255, 0, 0)"])
+    var stateColor = d3.scale.threshold().domain([25000, 75000, 150000, 400000, 805000]).range(["rgb(220, 225, 225)", "rgb(220, 175, 175)", "rgb(220, 125, 125)", "rgb(220, 75, 75)", "rgb(255, 0, 0)"]);
     var title = "Confirmed Cases by State";
-    var labels = ["<=5,000", "200,000", "400,000", "600,000", ">=800,000"];
+    var labels = ["<25,000", "25,000-75,000", "75,000-150,000", "150,000-400,000", "400,000-805,000"];
     console.log("draw states");
     var svg = d3.select("#SmapLegend");
     svg.append("g")
-        .attr("class", "legendLinear")
+        .attr("class", "legendQuant")
         .attr("transform", "translate(150,20)")
         .style("font-size", "12px");
     var stateLegend = d3.legend.color()
         .scale(stateColor)
-        .shapeWidth(100)
+        .shapeWidth(125)
         .orient('horizontal')
         .title(title)
         .labels(labels)
@@ -74,7 +71,7 @@ function drawStatesByCases() {
         });
 
 
-    svg.select(".legendLinear")
+    svg.select(".legendQuant")
         .call(stateLegend);
     console.log("states being drawn");
 
@@ -143,18 +140,18 @@ function drawStatesByCases() {
     });
 }
 function drawStatesByRecovered() {
-    var stateColor = d3.scale.linear().domain([0, 750000]).range(["rgb(220,225,225)", "rgb(0, 255, 0)"]);
+    var stateColor = d3.scale.threshold().domain([5000, 25000, 100000, 375000, 750000]).range(["rgb(225, 220, 225)", "rgb(175, 220, 175)", "rgb(125, 220, 125)", "rgb(75, 220, 75)", "rgb(0, 255, 0)"]);
     var title = "Recovered Patients by State";
-    var labels = ["<=5000", "190,000", "375,000", "550,000", ">=750,000"];
+    var labels = ["<5,000", "5,000-25,000", "25,000-100,000", "100,000-375,000", "375,000-750,000"];
     console.log("draw states");
     var svg = d3.select("#SmapLegend2");
     svg.append("g")
-        .attr("class", "legendLinear")
+        .attr("class", "legendQuant")
         .attr("transform", "translate(150,20)")
         .style("font-size", "12px");
     var stateLegend = d3.legend.color()
         .scale(stateColor)
-        .shapeWidth(100)
+        .shapeWidth(125)
         .orient('horizontal')
         .title(title)
         .labels(labels)
@@ -163,7 +160,7 @@ function drawStatesByRecovered() {
         });
 
 
-    svg.select(".legendLinear")
+    svg.select(".legendQuant")
         .call(stateLegend);
     console.log("states being drawn");
 
@@ -233,18 +230,18 @@ function drawStatesByRecovered() {
     });
 }
 function drawStatesByTests() {
-    var stateColor = d3.scale.linear().domain([100000, 10000000]).range(["rgb(220,225,225)", "rgb(0, 0, 255)"]);
+    var stateColor = d3.scale.threshold().domain([100000, 250000, 1000000, 5000000, 15000000]).range(["rgb(225, 225, 220)", "rgb(175, 175, 220)", "rgb(125, 125, 220)", "rgb(75,75, 220)", "rgb(0, 0, 255)"]);
     var title = "Tests Conducted by State";
-    var labels = ["<=100,000", "2,750,000", "5,050,000", "7,525,000", ">=10,000,000"];
+    var labels = ["<100,000", "100,000-250,000", "250,000-1,000,000", "1,000,000-5,000,000", "5,000,000-15,000,000"];
     console.log("draw states");
     var svg = d3.select("#SmapLegend3");
     svg.append("g")
-        .attr("class", "legendLinear")
+        .attr("class", "legendQuant")
         .attr("transform", "translate(150,20)")
         .style("font-size", "12px");
     var stateLegend = d3.legend.color()
         .scale(stateColor)
-        .shapeWidth(100)
+        .shapeWidth(125)
         .orient('horizontal')
         .title(title)
         .labels(labels)
@@ -253,7 +250,7 @@ function drawStatesByTests() {
         });
 
 
-    svg.select(".legendLinear")
+    svg.select(".legendQuant")
         .call(stateLegend);
     console.log("states being drawn");
 
@@ -324,19 +321,19 @@ function drawStatesByTests() {
 function drawCounties() {
     var svg = d3.select("#CmapLegend");
     svg.append("g")
-        .attr("class", "legendSymbol")
+        .attr("class", "legendQuant")
         .attr("transform", "translate(150,20)")
         .style("font-size", "12px");
     var legend = d3.legend.color()
-        .shapeWidth(100)
+        .shapeWidth(125)
         .orient('horizontal')
         .scale(countyColor)
         .title("Confirmed Cases by County")
-        .labels(["<=1", "7,500", "15,000", "22,500", ">=30,000"])
+        .labels(["<100", "100-1,000", "1,000-10,000", "10,000-50,000", "50,000-200,000"])
         .on("cellclick", function (d) {
             //console.log(d);
         });
-    svg.select(".legendSymbol")
+    svg.select(".legendQuant")
         .call(legend);
 
     var svg = d3.select("#countyMap")
