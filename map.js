@@ -16,7 +16,7 @@ var testedCheckBox = document.getElementById("testedCheckBox");
 var stateColor = d3.scale.linear().domain([5000, 800000]).range(["rgb(220,225,225)", "rgb(255, 0, 0)"])
 var title = "Confirmed Cases by State";
 var labels = ["<=5,000", "150,000", "300,000", "550,000", ">=800,000"];
-var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(220, 220, 255)", "rgb(255, 0, 0)"])
+var countyColor = d3.scale.linear().domain([1, 30000]).range(["rgb(235, 245, 240)", "rgb(255, 0, 0)"])
 
 var Gdiv = d3.select("body").append("div")
     .attr("class", "gtooltip")
@@ -30,6 +30,7 @@ var countyZoom = document.getElementById("countyZoom");
 var stateDeaths = {};
 var stateTests = {};
 var stateCases = {};
+var stateRecovered = {};
 var stateCodes = {};
 var countyCases = {};
 var countyDeaths = {};
@@ -55,7 +56,7 @@ d3.select("#sortRadio").style("visibility", 'visible')
 function drawStatesByCases() {
     var stateColor = d3.scale.linear().domain([5000, 800000]).range(["rgb(220,225,225)", "rgb(255, 0, 0)"])
     var title = "Confirmed Cases by State";
-    var labels = ["<=5,000", "150,000", "300,000", "550,000", ">=800,000"];
+    var labels = ["<=5,000", "200,000", "400,000", "600,000", ">=800,000"];
     console.log("draw states");
     var svg = d3.select("#SmapLegend");
     svg.append("g")
@@ -142,10 +143,9 @@ function drawStatesByCases() {
     });
 }
 function drawStatesByRecovered() {
-    var stateColor = d3.scale.linear().domain([1, 26000]).range(["rgb(220,225,225)", "rgb(0, 255, 0)"]);
-    //title = "Recovered Patients by State";
-    var title = "Deaths by State";
-    var labels = ["<=1", "6,500", "13,000", "19,500", ">=26,000"];
+    var stateColor = d3.scale.linear().domain([5000, 750000]).range(["rgb(220,225,225)", "rgb(0, 255, 0)"]);
+    var title = "Recovered Patients by State";
+    var labels = ["<=5000", "190,000", "375,000", "550,000", ">=750,000"];
     console.log("draw states");
     var svg = d3.select("#SmapLegend2");
     svg.append("g")
@@ -179,6 +179,7 @@ function drawStatesByRecovered() {
                 stateDeaths[statesCovid[i].full] = Number(statesCovid[i].death).toLocaleString();
                 stateTests[statesCovid[i].full] = Number(statesCovid[i].total).toLocaleString();
                 stateCases[statesCovid[i].full] = Number(statesCovid[i].positive).toLocaleString();
+                stateRecovered[statesCovid[i].full] = Number(statesCovid[i].positive).toLocaleString();
                 //console.log(statesCovid[i].death);
             }
             //console.log(stateDeaths);
@@ -195,8 +196,8 @@ function drawStatesByRecovered() {
                 .style("fill", function (state) {
                     //console.log("made it");
                     try {
-                        //console.log(parseFloat(stateDeaths[state.properties.NAME].replace(/,/g, '')));
-                        return stateColor(parseFloat(stateDeaths[state.properties.NAME].replace(/,/g, '')));
+                        //console.log(parseFloat(stateRecovered[state.properties.NAME].replace(/,/g, '')));
+                        return stateColor(parseFloat(stateRecovered[state.properties.NAME].replace(/,/g, '')));
                     }
                     catch (error) {
                         console.error();
@@ -365,7 +366,7 @@ function drawCounties() {
                         }
                         catch (error) {
                             console.error();
-                            return "rgb(220, 220, 280)";
+                            return "rgb(235, 245, 240)";
                         }
                     })
                     .attr("stroke", "black")
