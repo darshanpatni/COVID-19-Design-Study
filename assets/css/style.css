@@ -55,7 +55,7 @@ a:hover {
     color: #EBEBEB;
     border-radius: 1%;
 }
-.sortRadio {
+#sortRadio {
     margin-left: 8%;
     font-size: 17px;
     width: 275px;
