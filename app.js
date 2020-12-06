@@ -1,6 +1,9 @@
 var STATE_HASHMAP = new Map();
 drawCounties();
-drawStates();
+drawStatesByCases();
+drawStatesByRecovered();
+drawStatesByTests();
+
 document.onload = function () {
 }
 setTimeout(() => {

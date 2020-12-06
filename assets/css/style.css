@@ -55,12 +55,13 @@ a:hover {
     color: #EBEBEB;
     border-radius: 1%;
 }
-.sortRadio {
-    font-size: 15px;
-    padding: 5px 10px;
+#sortRadio {
+    font-size: 17px;
+    width: 275px;
+    height: 30px;
     background-color: #474747;
     color: #EBEBEB;
-    margin-left: 42.8%;
+    margin-left: 41%;
     position: absolute;
 }
 .activeMap {

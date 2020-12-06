@@ -21,7 +21,7 @@
     </div>
 
     <div class="main-content">
-        <div class="sortRadio">
+        <div id="sortRadio">
             <input id="casesCheckBox" type="checkbox" value="casesCheckBox" onclick="changeLegend(value)"> Cases
             <input id="recoveredCheckBox" type="checkbox" value="recoveredCheckBox" onclick="changeLegend(value)">
             Recovered
@@ -32,8 +32,8 @@
         <button id="countyButton" class="sort" value="counties" onclick="show(value)">County Map</button>
         <select class="state-dropdown" id="state-dropdown" name="state" onchange="selectStateFromDropDown()">
         </select>
-        <hr class="divider"/>
-
+        <hr />
+        
         <div id="viz">
             <div class="line-chart-container" id="line-chart-container">
                 
@@ -55,6 +55,8 @@
             </div>
             <div id="d3-legend-v3" class="map-legend">
                 <svg style="position:absolute;" id="SmapLegend" width="900" height="120"></svg>
+                <svg style="position:absolute;" id="SmapLegend2" width="900" height="120"></svg>
+                <svg style="position:absolute;" id="SmapLegend3" width="900" height="120"></svg>
                 <svg style="position:absolute;" id="CmapLegend" width="900" height="120"></svg>
             </div>
             <div class="map-viz"></div>
@@ -80,6 +82,18 @@
             <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
                 <g transform="translate(0 0)"></g>
             </svg>
+            </div>
+            <div class="svg-pan-zoom-container" id="stateZoom2" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
+                data-pan-on-drag="button: left;" style="height: 80vh;">
+                <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap2">
+                    <g transform="translate(0 0)"></g>
+                </svg>
+            </div>
+            <div class="svg-pan-zoom-container" id="stateZoom3" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
+                data-pan-on-drag="button: left;" style="height: 80vh;">
+                <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap3">
+                    <g transform="translate(0 0)"></g>
+                </svg>
             </div>
             <div class="svg-pan-zoom-container" id="countyZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
                 data-pan-on-drag="button: left;" style="height: 80vh;">
