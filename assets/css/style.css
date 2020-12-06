@@ -39,8 +39,8 @@ a:hover {
     text-decoration: underline;
 }
 .svg-pan-zoom-container {
-    width: 900px;
-    height: 600px;
+    width: 59%;
+    height: 80%;
     position: absolute;
     overflow: hidden !important;
     background: rgb(0,0,0,.2);
@@ -223,7 +223,7 @@ div.total-tests{
 .map-legend{
     background: rgb(0,0,0,0.4);
     height: 85px;
-    width: 900px;
+    width: 59.7%;
 }
 
 .state-dropdown{

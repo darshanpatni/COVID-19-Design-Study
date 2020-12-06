@@ -15,7 +15,9 @@ let attribute = {
 var	margin = {top: 30, right: 70, bottom: 30, left: 0},
 	width = 550 - margin.left - margin.right,
 	height = 200 - margin.top - margin.bottom;
- 
+
+width = window.innerWidth*.31
+height = window.innerHeight*.186
 // Parse the date / time
 var	parseDate = d3.time.format("%Y%m%d").parse;
  
