@@ -22,21 +22,24 @@
 
     <div class="main-content">
         <div id="sortRadio">
-            <input id="casesCheckBox" type="checkbox" value="casesCheckBox" onclick="changeLegend(value)"> Cases
-            <input id="recoveredCheckBox" type="checkbox" value="recoveredCheckBox" onclick="changeLegend(value)">
+            <span style="padding-left:2%"><input id="casesCheckBox" type="checkbox" value="casesCheckBox"
+                    onclick="changeLegend(value)"> Cases</span>
+            <span style="padding-left:2%"><input id="recoveredCheckBox" type="checkbox" value="recoveredCheckBox"
+                    onclick="changeLegend(value)"></span>
             Recovered
-            <input id="testedCheckBox" type="checkbox" value="testedCheckBox" onclick="changeLegend(value)"> Tested
+            <span style="padding-left:2%"><input id="testedCheckBox" type="checkbox" value="testedCheckBox"
+                    onclick="changeLegend(value)"> Tested</span>
         </div>
-        
+
         <button id="stateButton" class="sort" value="states" onclick="show(value)">State Map</button>
         <button id="countyButton" class="sort" value="counties" onclick="show(value)">County Map</button>
         <select class="state-dropdown" id="state-dropdown" name="state" onchange="selectStateFromDropDown()">
         </select>
         <hr />
-        
+
         <div id="viz">
             <div class="line-chart-container" id="line-chart-container">
-                
+
                 <div id="positive" class="confirmed">
                     <p class="chart-title">Confirmed</p>
                     <p class="chart-date" id="date"></p>
@@ -78,10 +81,10 @@
 
             </div>
             <div class="svg-pan-zoom-container" id="stateZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-            data-pan-on-drag="button: left;" style="height: 80vh;">
-            <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
-                <g transform="translate(0 0)"></g>
-            </svg>
+                data-pan-on-drag="button: left;" style="height: 80vh;">
+                <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
+                    <g transform="translate(0 0)"></g>
+                </svg>
             </div>
             <div class="svg-pan-zoom-container" id="stateZoom2" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
                 data-pan-on-drag="button: left;" style="height: 80vh;">
@@ -101,42 +104,50 @@
                     <g transform="translate(0 0)"></g>
                 </svg>
             </div>
-            </div>
+        </div>
 
-        </div>
-        <div class="question-container">
-                <h2 class="questions">Where the number of tests were highest</h2>
-                <p class="question-desc">
-                    States with highest number of tests till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time.
-                </p>
-                <div id="question-2" class="question-viz-container"></div>
-                <div class="question-viz-container"></div>
-                <h2 class="questions">Where the number of confirmed cases are highest</h2>
-                <p class="question-desc">
-                    States with highest number of cases till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time.
-                </p>
-                <div id="question-3" class="question-viz-container"></div>
-                <h2 class="questions">Where the number of recovered people are highest</h2>
-                <p class="question-desc">
-                    States with highest number of cases till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois, Florida, Georgia and California is missing.
-                </p>
-                <div id="question-4" class="question-viz-container"></div>
-                <h2 class="questions">Where the death toll is highest</h2>
-                <p class="question-desc">
-                    States with highest number of deaths till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois, Florida, Georgia and California is missing.
-                </p>
-                <div id="question-5" class="question-viz-container"></div>
-                <h2 class="questions">Where new cases are high but are going down</h2>
-                <p class="question-desc">
-                    States where new cases are higher but are going down over past 60 days. The charts, which are all on the same scale, show positive case increase per day.
-                </p>
-                <div id="question-1"></div>
-                <h2 class="questions">Where new cases are low but are going up</h2>
-                <p class="question-desc">
-                    States where new cases are low but are going up over past 60 days. The charts, which are all on the same scale, show positive case increase per day.
-                </p>
-                <div id="question-6"></div>
-        </div>
+    </div>
+    <div class="question-container">
+        <h2 class="questions">Where the number of tests were highest</h2>
+        <p class="question-desc">
+            States with highest number of tests till 27 September 2020. The charts, which are all on the same scale,
+            show cumulitive positive cases over the time.
+        </p>
+        <div id="question-2" class="question-viz-container"></div>
+        <div class="question-viz-container"></div>
+        <h2 class="questions">Where the number of confirmed cases are highest</h2>
+        <p class="question-desc">
+            States with highest number of cases till 27 September 2020. The charts, which are all on the same scale,
+            show cumulitive positive cases over the time.
+        </p>
+        <div id="question-3" class="question-viz-container"></div>
+        <h2 class="questions">Where the number of recovered people are highest</h2>
+        <p class="question-desc">
+            States with highest number of cases till 27 September 2020. The charts, which are all on the same scale,
+            show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois,
+            Florida, Georgia and California is missing.
+        </p>
+        <div id="question-4" class="question-viz-container"></div>
+        <h2 class="questions">Where the death toll is highest</h2>
+        <p class="question-desc">
+            States with highest number of deaths till 27 September 2020. The charts, which are all on the same scale,
+            show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois,
+            Florida, Georgia and California is missing.
+        </p>
+        <div id="question-5" class="question-viz-container"></div>
+        <h2 class="questions">Where new cases are high but are going down</h2>
+        <p class="question-desc">
+            States where new cases are higher but are going down over past 60 days. The charts, which are all on the
+            same scale, show positive case increase per day.
+        </p>
+        <div id="question-1"></div>
+        <h2 class="questions">Where new cases are low but are going up</h2>
+        <p class="question-desc">
+            States where new cases are low but are going up over past 60 days. The charts, which are all on the same
+            scale, show positive case increase per day.
+        </p>
+        <div id="question-6"></div>
+    </div>
     </div>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.13.0/d3-legend.min.js"></script>
