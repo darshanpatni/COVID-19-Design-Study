@@ -47,6 +47,11 @@
                     <p class="chart-date" id="date"></p>
                     <p class="chart-count" id="recovered-count"></p>
                 </div>
+                <div id="deaths" class="deaths">
+                    <p class="chart-title">Deceased</p>
+                    <p class="chart-date" id="date"></p>
+                    <p class="chart-count" id="death-count"></p>
+                </div>
                 <div id="totalCases" class="total-tests">
                     <p class="chart-title">Tested</p>
                     <p class="chart-date" id="date"></p>
@@ -102,8 +107,34 @@
                 </svg>
             </div>
             </div>
-
+            <div class="insight-container-div">
+                <div class="insight-div confirmed-insights">
+                    <p>Confirmed Per Million</p>
+                    <p id="confirmed-us-data" class="sub-data"></p>
+                    <h3 id="cnf-in-num">93%</h3>
+                    <p id="cnf-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+                <div class="insight-div recovered-insights">
+                    <p>Recovery Ratio</p>
+                    <p id="recovered-us-data" class="sub-data"></p>
+                    <h3 id="rec-in-num">93%</h3>
+                    <p id="rec-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+                <div class="insight-div mortality-insights">
+                    <p>Mortality Ratio</p>
+                    <p id="death-us-data" class="sub-data"></p>
+                    <h3 id="death-in-num">93%</h3>
+                    <p id="death-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+                <div class="insight-div tests-insights">
+                    <p>Tests Per Million</p>
+                    <p id="tests-us-data" class="sub-data"></p>
+                    <h3 id="tst-in-num">93%</h3>
+                    <p id="test-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+            </div>
         </div>
+        
         <div class="question-container">
                 <h2 class="questions">Where the number of tests were highest</h2>
                 <p class="question-desc">
