@@ -1,5 +1,5 @@
-var w = 900;
-var h = 600;
+var w = window.innerWidth*.59;
+var h = window.innerHeight*.8;
 
 var projection = d3.geo.albersUsa()
     .translate([w / 2, h / 2])

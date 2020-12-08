@@ -50,6 +50,11 @@
                     <p class="chart-date" id="date"></p>
                     <p class="chart-count" id="recovered-count"></p>
                 </div>
+                <div id="deaths" class="deaths">
+                    <p class="chart-title">Deceased</p>
+                    <p class="chart-date" id="date"></p>
+                    <p class="chart-count" id="death-count"></p>
+                </div>
                 <div id="totalCases" class="total-tests">
                     <p class="chart-title">Tested</p>
                     <p class="chart-date" id="date"></p>
@@ -81,29 +86,93 @@
 
             </div>
             <div class="svg-pan-zoom-container" id="stateZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-                data-pan-on-drag="button: left;" style="height: 80vh;">
-                <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
-                    <g transform="translate(0 0)"></g>
-                </svg>
+            data-pan-on-drag="button: left;" >
+            <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap">
+                <g transform="translate(0 0)"></g>
+            </svg>
             </div>
             <div class="svg-pan-zoom-container" id="stateZoom2" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-                data-pan-on-drag="button: left;" style="height: 80vh;">
+                data-pan-on-drag="button: left;" >
                 <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap2">
                     <g transform="translate(0 0)"></g>
                 </svg>
             </div>
             <div class="svg-pan-zoom-container" id="stateZoom3" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-                data-pan-on-drag="button: left;" style="height: 80vh;">
+                data-pan-on-drag="button: left;">
                 <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="stateMap3">
                     <g transform="translate(0 0)"></g>
                 </svg>
             </div>
             <div class="svg-pan-zoom-container" id="countyZoom" data-zoom-on-wheel="zoom-amount: 0.005; max-scale: 20;"
-                data-pan-on-drag="button: left;" style="height: 80vh;">
+                data-pan-on-drag="button: left;" >
                 <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet " id="countyMap">
                     <g transform="translate(0 0)"></g>
                 </svg>
             </div>
+<<<<<<< HEAD
+=======
+            </div>
+            <div class="insight-container-div">
+                <div class="insight-div confirmed-insights">
+                    <p>Confirmed Per Million</p>
+                    <p id="confirmed-us-data" class="sub-data"></p>
+                    <h3 id="cnf-in-num">93%</h3>
+                    <p id="cnf-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+                <div class="insight-div recovered-insights">
+                    <p>Recovery Ratio</p>
+                    <p id="recovered-us-data" class="sub-data"></p>
+                    <h3 id="rec-in-num">93%</h3>
+                    <p id="rec-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+                <div class="insight-div mortality-insights">
+                    <p>Mortality Ratio</p>
+                    <p id="death-us-data" class="sub-data"></p>
+                    <h3 id="death-in-num">93%</h3>
+                    <p id="death-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+                <div class="insight-div tests-insights">
+                    <p>Tests Per Million</p>
+                    <p id="tests-us-data" class="sub-data"></p>
+                    <h3 id="tst-in-num">93%</h3>
+                    <p id="test-ins-txt" class="text-data">For evert 100 confirmed cases, ~ 93 have recovered from the virus.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="question-container">
+                <h2 class="questions">Where the number of tests were highest</h2>
+                <p class="question-desc">
+                    States with highest number of tests till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time.
+                </p>
+                <div id="question-2" class="question-viz-container"></div>
+                <div class="question-viz-container"></div>
+                <h2 class="questions">Where the number of confirmed cases are highest</h2>
+                <p class="question-desc">
+                    States with highest number of cases till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time.
+                </p>
+                <div id="question-3" class="question-viz-container"></div>
+                <h2 class="questions">Where the number of recovered people are highest</h2>
+                <p class="question-desc">
+                    States with highest number of cases till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois, Florida, Georgia and California is missing.
+                </p>
+                <div id="question-4" class="question-viz-container"></div>
+                <h2 class="questions">Where the death toll is highest</h2>
+                <p class="question-desc">
+                    States with highest number of deaths till 27 September 2020. The charts, which are all on the same scale, show cumulitive positive cases over the time. Note that Recovered data for key states such as Illinois, Florida, Georgia and California is missing.
+                </p>
+                <div id="question-5" class="question-viz-container"></div>
+                <h2 class="questions">Where new cases are high but are going down</h2>
+                <p class="question-desc">
+                    States where new cases are higher but are going down over past 60 days. The charts, which are all on the same scale, show positive case increase per day.
+                </p>
+                <div id="question-1"></div>
+                <h2 class="questions">Where new cases are low but are going up</h2>
+                <p class="question-desc">
+                    States where new cases are low but are going up over past 60 days. The charts, which are all on the same scale, show positive case increase per day.
+                </p>
+                <div id="question-6"></div>
+>>>>>>> ae3e0ab61d1674a0a785debb0b0cf5ac505e943a
         </div>
 
     </div>
