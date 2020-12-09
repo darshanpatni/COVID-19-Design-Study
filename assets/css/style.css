@@ -60,9 +60,18 @@ a:hover {
     color: #EBEBEB;
     border-radius: 1%;
 }
-#sortRadio {
+#sortRadio{
     font-size: 17px;
-    width: 275px;
+    width: 400px;
+    height: 30px;
+    background-color: #474747;
+    color: #EBEBEB;
+    margin-left: 41%;
+    position: absolute;
+}
+#sortRadio2 {
+    font-size: 17px;
+    width: 175px;
     height: 30px;
     background-color: #474747;
     color: #EBEBEB;
