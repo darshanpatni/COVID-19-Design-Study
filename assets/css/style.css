@@ -275,6 +275,7 @@ select option {
 
 .viz-content {
     margin: 8px;
+    min-width: 1300px;
     max-width: 1300px;
 }
 
