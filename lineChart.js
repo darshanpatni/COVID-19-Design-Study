@@ -24,7 +24,7 @@ var usTstPerMil = (USTests/USPopulation)*1000000;
 
 // Set the dimensions of the canvas / graph
 var	margin = {top: 30, right: 70, bottom: 30, left: 0},
-	width = 550 - margin.left - margin.right,//480
+	width = 450 - margin.left - margin.right,//480
 	height = 200 - margin.top - margin.bottom;//140
 
 // width = window.innerWidth*.31
@@ -42,7 +42,6 @@ var divRecovered = d3.select("#recovered");
 var divDeceased = d3.select("#deaths");
 
 window.addEventListener('load', function() {
-    console.log('All assets are loaded')
     dropdown = document.getElementById('state-dropdown');
     dropdown.length = 0;
 
@@ -89,7 +88,6 @@ function getCumulitiveDataForState(state) {
  * @param {String YYYY-mm-dd format} date 
  */
 function getStateDataForDate(state, date) {
-    console.log(state,date);
     return stateData[state]["date_data"][date];
 }
 
@@ -106,8 +104,8 @@ function drawLineChartForState(state) {
     dropdown.value = state;
 	d3.csv("assets/knowledge/covid-data/states/"+state+".csv", function(error, data) {
         //Code for line chart
+        dropdown.value = state;
         data.forEach(function(d) {
-            console.log(parseDate(d.date));
             d.date = parseDate(d.date);
             d.positive = +d.positive;
             d.negative = +d.negative;
@@ -261,7 +259,6 @@ function showDataForDate(date, data) {
     deathCount.innerHTML = data["death"];
 
     var dateElements = document.getElementsByClassName("chart-date");
-    console.log(dateElements)
     for(let element of dateElements) {
         element.innerHTML = date;
     }

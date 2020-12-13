@@ -140,16 +140,13 @@ function drawLineChartV1(data, width, height, svg, attr) {
 }
 
 function mousemove() {
-    console.log(x(d3.mouse(this)[0]));
     var x0 = x.invert(d3.mouse(this)[0]);
-    console.log(x0.toDateString());
     data = getStateDataForDate(dropdown.value, x0.yyyymmdd());
     recoverdFocus.attr("transform", "translate(" + x(x0) + "," + y(data["recovered"]) + ")");
     positiveFocus.attr("transform", "translate(" + x(x0) + "," + y(data["positive"]) + ")");
     totalFocus.attr("transform", "translate(" + totalX(x0) + "," + totalY(data["totalTestResults"]) + ")");
     deathFocus.attr("transform", "translate(" + x(x0) + "," + y(data["death"]) + ")");
     // console.log(d)
-    console.log(x0.toDateString())
     showDataForDate(x0.toDateString(), data);
 }
 
